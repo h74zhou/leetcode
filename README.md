@@ -1,3 +1,3 @@
 # leetcode
 
-Leetcode questions in Swift 2
+Leetcode questions in Swift 3
