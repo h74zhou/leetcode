@@ -4,19 +4,24 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        results = []
-
-        def backtrack(tempList):
-            if len(tempList) == len(nums):
-                results.append(tempList)
+        answer = []
+        length = len(nums)
+        
+        def backtrack(currArr, currRem, setArray):
+            if len(currArr) == length:
+                answer.append(currArr)
             else:
-                for i in range(len(nums)):
-                    if nums[i] in tempList:
+                for i in range(len(currRem)):
+                    if currRem[i] in setArray:
                         continue
-                    else:
-                        tempList.append(nums[i])
-                        backtrack(tempList[:])
-                        tempList.pop()
+                    currArr.append(currRem[i])
+                    setArray.add(currRem[i])
+                    tempRem = currRem[:]
+                    tempRem.remove(currRem[i])
+                    backtrack(currArr[:], tempRem[:], setArray.copy())
+                    currArr.pop()
+                    setArray.remove(currRem[i])
 
-        backtrack([])
-        return results
+        arraySet = set()
+        backtrack([], nums[:], arraySet)
+        return answer
