@@ -16,14 +16,15 @@ class Solution(object):
                 j -= 1
             return True
 
-        def backtrack(currStr, currArr, currIndex):
+        def backtrack(currArr, currIndex):
             if currIndex == len(s):
-                return
+                answer.append(currArr)
             else:
                 for i in range(currIndex, len(s)):
-                    if isPalindrome(currStr):
-                        currArr.append(currStr)
-                        backtrack(currStr + s[i], currArr[:], i + 1)
+                    if isPalindrome(s[currIndex: i + 1]):
+                        currArr.append(s[currIndex: i + 1])
+                        backtrack(currArr[:], i + 1)
+                        currArr.pop()
 
-        backtrack("", [], 0)
+        backtrack([], 0)
         return answer
