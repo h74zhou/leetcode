@@ -4,22 +4,20 @@
 #         self.val = x
 #         self.next = None
 
-
 class Solution(object):
     def hasCycle(self, head):
         """
         :type head: ListNode
         :rtype: bool
         """
-        if head is None:
-            return False
-
         slow = head
-        fast = head.next
+        fast = head
 
-        while fast is not None and fast.next is not None:
-            if slow.val == fast.val:
-                return True
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
+
+            if slow == fast:
+                return True
+
         return False
