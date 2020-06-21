@@ -5,27 +5,28 @@ class Solution(object):
         :type order: str
         :rtype: bool
         """
-
         d = {}
-        for index, letter in enumerate(order):
-            d[letter] = index
+        for index, value in enumerate(order):
+            d[value] = index
 
-        def compareLex(word1, word2):
-            i = 0
-            while i < len(word1) and i < len(word2):
-                if word1[i] == word2[i]:
-                    i += 1
-                elif d[word1[i]] > d[word2[i]]:
+        def before(word1, word2):
+            w1 = 0
+            w2 = 0
+            while w1 < len(word1) and w2 < len(word2):
+                if d[word1[w1]] < d[word2[w2]]:
+                    return True
+                if d[word1[w1]] > d[word2[w2]]:
                     return False
                 else:
-                    return True
+                    w1 += 1
+                    w2 += 1
 
             if len(word1) <= len(word2):
                 return True
             return False
 
         for i in range(1, len(words)):
-            if not compareLex(words[i - 1], words[i]):
+            if not before(words[i - 1], words[i]):
                 return False
 
         return True
