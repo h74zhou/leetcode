@@ -5,21 +5,21 @@ class Solution(object):
         :rtype: List[int]
         """
         if len(nums) == 0:
-            return []
-
-        if len(nums) == 1:
             return nums
 
         left = [1] * len(nums)
+        leftSum = nums[0]
         for i in range(1, len(nums)):
-            left[i] = nums[i - 1] * left[i - 1]
+            left[i] = leftSum
+            leftSum *= nums[i]
 
-        j = len(nums) - 1
-        right = 1
+        rightIndex = len(nums) - 1
+        rightSum = nums[rightIndex]
+        rightIndex -= 1
 
-        while j >= 0:
-            left[j] = left[j] * right
-            right *= nums[j]
-            j -= 1
+        while rightIndex >= 0:
+            left[rightIndex] *= rightSum
+            rightSum *= nums[rightIndex]
+            rightIndex -= 1
 
         return left
