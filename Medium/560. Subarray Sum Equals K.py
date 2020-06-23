@@ -5,20 +5,13 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        prefixSum = 0
+        d = {0: 1}
         count = 0
-        sumFound = {0: 1}
 
-        currSum = 0
         for i in range(len(nums)):
-            currSum += nums[i]
-            # determine number of times preSum - k has occurred
-            if currSum - k in sumFound:
-                count += sumFound[currSum - k]
-
-            if currSum not in sumFound:
-                sumFound[currSum] = 1
-            else:
-                sumFound[currSum] += 1
+            prefixSum += nums[i]
+            count += d.get(prefixSum - k, 0)
+            d[prefixSum] = d.get(prefixSum, 0) + 1
 
         return count
-
