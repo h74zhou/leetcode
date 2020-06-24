@@ -9,13 +9,22 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        left = 1
-        right = n
-        while left < right:
-            mid = (left + right) / 2
-            if isBadVersion(mid):
-                right = mid
-            else:
-                left = mid + 1
+        start = 1
+        end = n
 
-        return right
+        while start < end:
+            mid = (start + end) / 2
+            currBad = isBadVersion(mid)
+            if mid - 1 > 0:
+                prevBad = isBadVersion(mid - 1)
+            else:
+                prevBad = False
+
+            if currBad and not prevBad:
+                return mid
+            elif currBad:
+                end = mid - 1
+            else:
+                start = mid + 1
+
+        return start
