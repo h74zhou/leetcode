@@ -5,8 +5,17 @@ class Solution(object):
         :type target: str
         :rtype: str
         """
-        for letter in letters:
-            if letter > target:
-                return letter
+        low = 0
+        high = len(letters) - 1
 
-        return letters[0]
+        if letters[high] <= target:
+            return letters[0]
+
+        while low <= high:
+            mid = (low + high) / 2
+            if letters[mid] <= target:
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        return letters[low]
