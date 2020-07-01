@@ -8,12 +8,12 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        if len(nums) == 0:
-            return None
-
+        for i in range(len(nums)):
+            nums[i] = 0 - nums[i]
         heapq.heapify(nums)
 
-        for i in range(len(nums) - k + 1):
+        answer = 0
+        for i in range(k):
             answer = heapq.heappop(nums)
 
-        return answer
+        return answer * -1
