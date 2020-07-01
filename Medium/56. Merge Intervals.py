@@ -25,4 +25,4 @@ class Solution(object):
                 else:
                     stack.append(interval)
 
-        return [x for x in stack]
+        return stack
