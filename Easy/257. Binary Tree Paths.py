@@ -12,22 +12,17 @@ class Solution(object):
         """
         answer = []
 
-        def dfs(root, currStr):
-            if not root.left and not root.right:
-                answer.append(currStr + "->" + str(root.val))
+        def dfs(node, currStr):
+            if not node.left and not node.right:
+                answer.append(currStr + str(node.val))
             else:
-                if root.left:
-                    dfs(root.left, currStr + "->" + str(root.val))
-                if root.right:
-                    dfs(root.right, currStr + "->" + str(root.val))
+                if node.left:
+                    dfs(node.left, currStr + str(node.val) + "->")
+                if node.right:
+                    dfs(node.right, currStr + str(node.val) + "->")
 
         if root is None:
-            return ""
+            return []
 
         dfs(root, "")
-        for i in range(len(answer)):
-            string = answer[i]
-            string = string[2:]
-            answer[i] = string
-
         return answer
