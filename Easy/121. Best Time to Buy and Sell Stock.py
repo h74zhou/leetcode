@@ -7,14 +7,12 @@ class Solution(object):
         if len(prices) == 0:
             return 0
 
-        min = prices[0]
-        max = 0
+        maxProfit = 0
+        currMin = prices[0]
+        for i in range(len(prices)):
+            if prices[i] - currMin > maxProfit:
+                maxProfit = prices[i] - currMin
+            elif prices[i] < currMin:
+                currMin = prices[i]
 
-        for i in range(1, len(prices)):
-            cost = prices[i]
-            if cost < min:
-                min = cost
-            elif cost - min > max:
-                max = cost - min
-
-        return max
+        return maxProfit
