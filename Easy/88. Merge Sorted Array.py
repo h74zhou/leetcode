@@ -7,33 +7,20 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        answer = []
-        i = 0
-        j = 0
+        k = m + n - 1
+        i = m - 1
+        j = n - 1
 
-        while i < m and j < n:
-            if nums1[i] < nums2[j]:
-                answer.append(nums1[i])
-                i += 1
-            elif nums1[i] > nums2[j]:
-                answer.append(nums2[j])
-                j += 1
+        while i >= 0 and j >= 0:
+            if nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
             else:
-                answer.append(nums1[i])
-                answer.append(nums2[j])
-                i += 1
-                j += 1
-            # print(answer)
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
 
-        while i < m:
-            answer.append(nums1[i])
-            i += 1
-            # print(answer)
-
-        while j < n:
-            answer.append(nums2[j])
-            j += 1
-            # print(answer)
-
-        for i in range(len(answer)):
-            nums1[i] = answer[i]
+        while j >= 0:
+            nums1[k] = nums2[j]
+            j -= 1
+            k -= 1
