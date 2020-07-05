@@ -5,29 +5,16 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        nums1.sort()
-        nums2.sort()
+        d1, d2 = {}, {}
 
-        i = 0
-        j = 0
-        answer = []
-
-        while i < len(nums1) and j < len(nums2):
-            first = nums1[i]
-            second = nums2[j]
-            if first == second:
-                answer.append(first)
-                while first == nums1[i]:
-                    i += 1
-                    if i >= len(nums1):
-                        return answer
-                while second == nums2[j]:
-                    j += 1
-                    if j >= len(nums2):
-                        return answer
-            elif first > second:
-                j += 1
+        for num in nums1:
+            if num in d1:
+                d1[num] += 1
             else:
-                i += 1
+                d1[num] = 1
 
-        return answer
+        for num in nums2:
+            if num in d1:
+                d2[num] = 1
+
+        return [n for n in d2]
