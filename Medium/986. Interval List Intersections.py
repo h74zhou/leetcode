@@ -5,20 +5,20 @@ class Solution(object):
         :type B: List[List[int]]
         :rtype: List[List[int]]
         """
+        i = 0
+        j = 0
         answer = []
-        defaultError = [float('-inf'), float('-inf')]
 
-        def getIntersection(arr1, arr2):
-            front = max(arr1[0], arr2[0])
-            back = min(arr1[1], arr2[1])
-            if back - front >= 0:
-                return [front, back]
-            return defaultError
+        while i < len(A) and j < len(B):
+            aStart, aEnd = A[i]
+            bStart, bEnd = B[j]
 
-        for arrA in A:
-            for arrB in B:
-                intersection = getIntersection(arrA, arrB)
-                if intersection != defaultError:
-                    answer.append(intersection)
+            if aStart <= bEnd and aEnd >= bStart:
+                answer.append([max(aStart, bStart), min(aEnd, bEnd)])
+
+            if aEnd <= bEnd:
+                i += 1
+            else:
+                j += 1
 
         return answer
