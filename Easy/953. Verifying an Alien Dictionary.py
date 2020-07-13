@@ -6,24 +6,16 @@ class Solution(object):
         :rtype: bool
         """
         d = {}
-        for index, value in enumerate(order):
-            d[value] = index
+        for i in range(len(order)):
+            d[order[i]] = i
 
         def before(word1, word2):
-            w1 = 0
-            w2 = 0
-            while w1 < len(word1) and w2 < len(word2):
-                if d[word1[w1]] < d[word2[w2]]:
+            for i in range(min(len(word1), len(word2))):
+                if d[word1[i]] < d[word2[i]]:
                     return True
-                if d[word1[w1]] > d[word2[w2]]:
+                elif d[word1[i]] > d[word2[i]]:
                     return False
-                else:
-                    w1 += 1
-                    w2 += 1
-
-            if len(word1) <= len(word2):
-                return True
-            return False
+            return len(word1) <= len(word2)
 
         for i in range(1, len(words)):
             if not before(words[i - 1], words[i]):
