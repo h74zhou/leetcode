@@ -1,19 +1,18 @@
 class Solution(object):
-    def canAttendMeetings(self, nums):
+    def canAttendMeetings(self, meetings):
         """
-        :type nums: List[int]
-        :rtype: Boolean
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
         """
-        start = nums[0][0]
-        end = nums[0][1]
-
-        for s, e in nums[1:]:
-            front = max(s, start)
-            back = min(e, end)
-            if back - front >= 0:
+        meetings.sort()
+        for i in range(1, len(meetings)):
+            currStart = meetings[i][0]
+            prevEnd = meetings[i - 1][1]
+            if prevEnd > currStart:
                 return False
         return True
 
 
-answer = Solution()
-print answer.canAttendMeetings([[1, 4], [5, 6], [8, 9]])
+test = Solution()
+print test.canAttendMeetings([[0, 25], [30, 36], [26, 28]])
