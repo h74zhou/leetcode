@@ -5,18 +5,21 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+
+        freq = 0
         d = {}
-        mode = 0
+
         for task in tasks:
             if task in d:
                 d[task] += 1
             else:
                 d[task] = 1
-            mode = max(mode, d[task])
+            freq = max(freq, d[task])
 
-        count = (mode - 1) * (n + 1)
+        count = (n + 1) * (freq - 1)
+
         for index, value in d.iteritems():
-            if value == mode:
+            if value == freq:
                 count += 1
 
         return max(count, len(tasks))
