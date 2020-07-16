@@ -8,7 +8,6 @@ class Solution(object):
         prefixSum = 0
         d = {0: 1}
         count = 0
-
         for i in range(len(nums)):
             prefixSum += nums[i]
             count += d.get(prefixSum - k, 0)
