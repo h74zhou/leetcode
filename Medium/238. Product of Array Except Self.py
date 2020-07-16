@@ -4,22 +4,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        if len(nums) == 0:
-            return nums
+        leftArray = []
+        leftArray.append(1)
 
-        left = [1] * len(nums)
-        leftSum = nums[0]
         for i in range(1, len(nums)):
-            left[i] = leftSum
-            leftSum *= nums[i]
+            leftArray.append(leftArray[i - 1] * nums[i - 1])
 
-        rightIndex = len(nums) - 1
-        rightSum = nums[rightIndex]
-        rightIndex -= 1
+        right = 1
+        for i in range(len(nums) - 1, -1, -1):
+            leftArray[i] *= right
+            right *= nums[i]
 
-        while rightIndex >= 0:
-            left[rightIndex] *= rightSum
-            rightSum *= nums[rightIndex]
-            rightIndex -= 1
-
-        return left
+        return leftArray
