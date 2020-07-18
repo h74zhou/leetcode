@@ -9,14 +9,14 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        start = 1
-        end = n
+        low = 1
+        high = n
 
-        while start < end:
-            mid = (start + end) / 2
-            if not isBadVersion(mid):
-                start = mid + 1
+        while low <= high:
+            mid = (low + high) / 2
+            if isBadVersion(mid):
+                high = mid - 1
             else:
-                end = mid
+                low = mid + 1
 
-        return end
+        return low
