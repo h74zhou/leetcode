@@ -4,24 +4,18 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        s = s.lower()
-        if len(s) == 0:
-            return True
+        i = 0
+        j = len(s) - 1
 
-        start = 0
-        end = len(s) - 1
-
-        while start <= end:
-            if not s[start].isalnum():
-                start += 1
-                continue
-            if not s[end].isalnum():
-                end -= 1
-                continue
-            if s[start] != s[end]:
+        while i <= j:
+            if not s[i].isalnum():
+                i += 1
+            elif not s[j].isalnum():
+                j -= 1
+            elif s[i].lower() != s[j].lower():
                 return False
-
-            start += 1
-            end -= 1
+            else:
+                i += 1
+                j -= 1
 
         return True
