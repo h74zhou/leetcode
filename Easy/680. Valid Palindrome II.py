@@ -1,27 +1,23 @@
 class Solution(object):
-
-    def isPalindrome(self, s, l, r):
-        while l <= r:
-            if s[l] != s[r]:
-                return False
-            else:
-                l += 1
-                r -= 1
-        return True
-
     def validPalindrome(self, s):
         """
         :type s: str
         :rtype: bool
         """
-        start = 0
-        end = len(s) - 1
+        def isPalindrome(i, j):
+            while i <= j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+            return True
 
+        if len(s) <= 1:
+            return True
+        start, end = 0, len(s) - 1
         while start <= end:
             if s[start] != s[end]:
-                return self.isPalindrome(s, start + 1, end) or self.isPalindrome(s, start, end - 1)
-            else:
-                start += 1
-                end -= 1
-
+                return isPalindrome(start, end - 1) or isPalindrome(start + 1, end)
+            start += 1
+            end -= 1
         return True
