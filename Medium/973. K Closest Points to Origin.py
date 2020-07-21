@@ -9,18 +9,16 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         def distance(point):
-            xPoint, yPoint = point
-            return 0 - sqrt((xPoint * xPoint) + (yPoint * yPoint))
+            y = abs(point[1] - 0)
+            x = abs(point[0] - 0)
+            return 0 - sqrt((y * y) + (x * x))
 
-        li = []
+        arr = []
         for point in points:
-            if len(li) < K:
-                heapq.heappush(li, (distance(point), point))
-            elif distance(point) < li[0]:
-                heapq.heappushpop(li, (distance(point), point))
+            if len(arr) < K:
+                heapq.heappush(arr, (distance(point), point))
+            elif distance(point) > arr[0][0]:
+                heapq.heappop(arr)
+                heapq.heappush(arr, (distance(point), point))
 
-        answer = []
-        for point in li:
-            answer.append(point[1])
-
-        return answer
+        return [x[1] for x in arr]
