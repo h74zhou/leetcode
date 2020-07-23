@@ -12,19 +12,19 @@ class Solution(object):
         :type R: int
         :rtype: int
         """
-        self.total = 0
+        self.rangeSum = 0
 
-        def dfs(root):
-            if root is None:
-                return
-            if root.val >= L and root.val <= R:
-                self.total += root.val
-                dfs(root.left)
-                dfs(root.right)
-            elif root.val >= L:
-                dfs(root.left)
-            elif root.val <= R:
-                dfs(root.right)
+        def recurse(node):
+            if not node:
+                return 0
+            elif node.val > R:
+                recurse(node.left)
+            elif node.val < L:
+                recurse(node.right)
+            else:
+                self.rangeSum += node.val
+                recurse(node.left)
+                recurse(node.right)
 
-        dfs(root)
-        return self.total
+        recurse(root)
+        return self.rangeSum
