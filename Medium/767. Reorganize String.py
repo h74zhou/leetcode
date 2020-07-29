@@ -4,6 +4,8 @@ class Solution(object):
         :type S: str
         :rtype: str
         """
+
+        # use heap
         d = {}
         mFreq = 0
         for c in S:
