@@ -5,6 +5,7 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
+        # dfs approach
         map = {}
         for i in range(len(board)):
             for j in range(len(board[0])):
