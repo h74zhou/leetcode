@@ -4,19 +4,18 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-        d = set()
-
-        for i in range(len(board)):
-            for j in range(len(board[0])):
-                curr = board[i][j]
-                if curr != ".":
-                    rowCheck = "currElement: " + curr + " in row: " + str(i)
-                    columnCheck = "currElement: " + curr + " in column: " + str(j)
-                    boxCheck = "currElement: " + curr + " in box " + str(i / 3) + " : " + str(j / 3)
-                    if rowCheck in d or columnCheck in d or boxCheck in d:
+        map = {}
+        for row in range(len(board)):
+            for column in range(len(board[0])):
+                if board[row][column] == ".":
+                    continue
+                else:
+                    rowStr = "Row: " + str(row) + " has digit: " + str(board[row][column])
+                    columnStr = "Column: " + str(column) + " has digit: " + str(board[row][column])
+                    gridStr = "Grid: " + str(row / 3) + ", " + str(column / 3) + ", hash digit: " + str(board[row][column])
+                    if rowStr in map or columnStr in map or gridStr in map:
                         return False
-                    d.add(rowCheck)
-                    d.add(columnCheck)
-                    d.add(boxCheck)
-
+                    map[rowStr] = 1
+                    map[columnStr] = 1
+                    map[gridStr] = 1
         return True
