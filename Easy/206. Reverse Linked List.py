@@ -4,13 +4,14 @@
 #         self.val = val
 #         self.next = next
 class Solution(object):
-    def reverseListIterative(self, head):
+    def reverseList(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
         """
-        prev = None
+        dum = None
         curr = head
+        prev = dum
 
         while curr:
             next = curr.next
@@ -19,17 +20,3 @@ class Solution(object):
             curr = next
 
         return prev
-
-    def reverseListRecursive(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        # recursively
-        if head is None or head.next is None:
-            return head
-
-        revLst = self.reverseListRecursive(head.next)
-        head.next.next = head
-        head.next = None
-        return revLst
