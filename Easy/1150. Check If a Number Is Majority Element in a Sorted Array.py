@@ -13,13 +13,5 @@ class Solution(object):
             else:
                 left = mid + 1
 
-        return True if nums[left + (length / 2)] == target else False
-
-
-test1 = [2, 4, 5, 5, 5, 5, 5, 6, 6]
-target1 = 5
-test2 = [10, 100, 101, 101]
-target2 = 101
-
-instance = Solution()
-instance.isMajorityElement(test1, target1)
+        maxIndex = left + (length / 2)
+        return True if maxIndex < len(nums) and nums[maxIndex] == target else False
