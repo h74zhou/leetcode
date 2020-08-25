@@ -10,14 +10,13 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        myList = []
-        def helper(root):
-            if root is None:
-                return None
+        answer = []
 
-            helper(root.left)
-            myList.append(root.val)
-            helper(root.right)
-
-        helper(root)
-        return myList
+        def traverse(node):
+            if not node:
+                return
+            traverse(node.left)
+            answer.append(node.val)
+            traverse(node.right)
+        traverse(root)
+        return answer
