@@ -15,6 +15,7 @@ class Solution(object):
             return answer
 
         stack = [root]
+
         while stack:
             last = stack.pop()
             answer.append(last.val)
@@ -22,4 +23,5 @@ class Solution(object):
                 stack.append(last.right)
             if last.left:
                 stack.append(last.left)
+
         return answer
