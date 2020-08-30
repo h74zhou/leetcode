@@ -13,14 +13,16 @@ class Solution(object):
         answer = []
         if not root:
             return answer
-        stack, curr = [root], root.left
 
-        while stack or curr:
-            if curr:
-                stack.append(curr)
-                curr = curr.left
+        stack = []
+
+        while stack or root is not None:
+            if root:
+                stack.append(root)
+                root = root.left
             else:
-                popped = stack.pop()
-                answer.append(popped.val)
-                curr = popped.right
+                last = stack.pop()
+                answer.append(last.val)
+                root = last.right
+
         return answer
