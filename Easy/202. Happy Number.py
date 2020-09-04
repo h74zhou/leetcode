@@ -1,25 +1,27 @@
 class Solution(object):
-    def sumOfDigits(self, n):
-        total = 0
-        while n != 0:
-            digit = n % 10
-            total += digit * digit
-            n /= 10
-        return total
-
     def isHappy(self, n):
         """
         :type n: int
         :rtype: bool
         """
-        slow = self.sumOfDigits(n)
-        fast = self.sumOfDigits(slow)
+        def getDigitSum(num):
+            digitSum = 0
+            while num:
+                digitSum += (num % 10) * (num % 10)
+                num /= 10
+            return digitSum
 
-        while slow != fast:
-            slow = self.sumOfDigits(slow)
-            fast = self.sumOfDigits(fast)
-            fast = self.sumOfDigits(fast)
-
-        if slow == 1 and fast == 1:
+        slow = getDigitSum(n)
+        if slow == 1:
             return True
-        return False
+
+        fast = getDigitSum(slow)
+        if fast == 1:
+            return True
+
+        while slow != fast and slow != 1 and fast != 1:
+            slow = getDigitSum(slow)
+            fast = getDigitSum(fast)
+            fast = getDigitSum(fast)
+
+        return True if slow == 1 or fast == 1 else False
