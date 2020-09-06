@@ -7,13 +7,16 @@ class Solution(object):
         if len(A) == 1:
             return True
 
-        increasing = True
-        decreasing = True
+        increasing = False
+        decreasing = False
 
         for i in range(1, len(A)):
             if A[i] > A[i - 1]:
-                decreasing = False
-            if A[i] < A[i - 1]:
-                increasing = False
+                increasing = True
+            elif A[i] < A[i - 1]:
+                decreasing = True
 
-        return increasing or decreasing
+        if increasing and decreasing:
+            return False
+
+        return True
