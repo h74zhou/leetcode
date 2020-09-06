@@ -9,12 +9,11 @@ class Solution(object):
         if N == 1:
             return 1
 
-        first = 0
-        second = 1
+        dp = []
+        dp.append(0)
+        dp.append(1)
 
         for i in range(2, N + 1):
-            temp = second
-            second = first + second
-            first = temp
+            dp.append(dp[i - 2] + dp[i - 1])
 
-        return second
+        return dp[-1]
