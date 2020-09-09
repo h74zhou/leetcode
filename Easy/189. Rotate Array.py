@@ -5,17 +5,16 @@ class Solution(object):
         :type k: int
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        def flip(start, end):
+        def reverseIndex(start, end):
             while start < end:
-                temp = nums[start]
-                nums[start] = nums[end]
-                nums[end] = temp
+                nums[start], nums[end] = nums[end], nums[start]
                 start += 1
                 end -= 1
 
         while k >= len(nums):
             k -= len(nums)
 
-        flip(0, len(nums) - 1)
-        flip(0, k - 1)
-        flip(k, len(nums) - 1)
+        if k != 0 and len(nums) > 1:
+            nums.reverse()
+            reverseIndex(0, k - 1)
+            reverseIndex(k, len(nums) - 1)
