@@ -5,27 +5,32 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        length = len(nums)
-        if length == 0:
+        if len(nums) == 0:
             return [-1, -1]
 
-        left = 0
-        right = length - 1
+        left, right = 0, len(nums) - 1
 
-        while left <= right:
-            mid = (left + right) / 2
+        while left < right:
+            mid = left + (right - left) // 2
             if nums[mid] >= target:
-                right = mid - 1
+                right = mid
             else:
                 left = mid + 1
 
-        left2 = 0
-        right2 = length - 1
-        while left2 <= right2:
-            mid = (left2 + right2) / 2
-            if nums[mid] <= target:
-                left2 = mid + 1
-            else:
-                right2 = mid - 1
+        if nums[left] != target:
+            return [-1, -1]
 
-        return [left, right2] if left <= right2 else [-1, -1]
+        start = left
+        left, right = 0, len(nums) - 1
+
+        while left < right:
+            mid = left + (right - left) // 2
+            if nums[mid] > target:
+                right = mid
+            else:
+                left = mid + 1
+
+        if nums[left] == target:
+            return [start, left]
+
+        return [start, left - 1]
