@@ -4,20 +4,24 @@ class Solution(object):
         :type numRows: int
         :rtype: List[List[int]]
         """
+        triangle = []
+
         if numRows == 0:
-            return []
+            return triangle
 
-        answer = []
-        answer.append([1])
+        if numRows >= 1:
+            triangle.append([1])
 
-        for i in range(1, numRows):
-            temp = []
-            temp.append(1)
-            for j in range(1, i):
-                prevLeft = answer[i - 1][j - 1]
-                prevRight = answer[i - 1][j]
-                temp.append(prevLeft + prevRight)
-            temp.append(1)
-            answer.append(temp)
+        if numRows >= 2:
+            triangle.append([1, 1])
 
-        return answer
+        for i in range(2, numRows):
+            row = []
+            row.append(1)
+
+            for j in range(1, len(triangle[i - 1])):
+                row.append(triangle[i - 1][j - 1] + triangle[i - 1][j])
+            row.append(1)
+            triangle.append(row)
+
+        return triangle
