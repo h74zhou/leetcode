@@ -5,16 +5,25 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        left = 0
-        minLength = float('inf')  # min length of contiguous subarray
-        currSum = 0
+        if len(nums) == 0:
+            return 0
 
-        for i in range(len(nums)):
-            currSum += nums[i]
+        start, end, currSum, minSize = 0, 0, nums[0], float('inf')
 
-            while currSum >= s:
-                minLength = min(minLength, i + 1 - left)
-                currSum -= nums[left]
-                left += 1
+        while end < len(nums):
+            if currSum >= s:
+                minSize = min(minSize, end - start + 1)
+                if start < end:
+                    currSum -= nums[start]
+                    start += 1
+                else:
+                    start += 1
+                    end += 1
+                    if end < len(nums):
+                        currSum = nums[end]
+            else:
+                end += 1
+                if end < len(nums):
+                    currSum += nums[end]
 
-        return minLength if minLength != float('inf') else 0
+        return minSize if minSize != float('inf') else 0
