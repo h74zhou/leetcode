@@ -8,19 +8,14 @@ class Solution(object):
         if len(matrix) == 0 or len(matrix[0]) == 0:
             return False
 
-        def binSearch(rowIndex):
-            left, right = 0, len(matrix[rowIndex]) - 1
-            while left <= right:
-                mid = left + (right - left) // 2
-                if matrix[rowIndex][mid] == target:
-                    return True
-                elif target < matrix[rowIndex][mid]:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-            return False
+        row, col = 0, len(matrix[0]) - 1
 
-        for i in range(len(matrix)):
-            if binSearch(i):
+        while row < len(matrix) and col >= 0:
+            if matrix[row][col] == target:
                 return True
+            elif matrix[row][col] > target:
+                col -= 1
+            else:
+                row += 1
+
         return False
