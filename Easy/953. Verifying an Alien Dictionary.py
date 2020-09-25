@@ -5,20 +5,26 @@ class Solution(object):
         :type order: str
         :rtype: bool
         """
-        d = {}
-        for i in range(len(order)):
-            d[order[i]] = i
+        if len(words) <= 1:
+            return True
 
+        d = {}
+        for index, letter in enumerate(order):
+            d[letter] = index
+
+        # returns true if word1 comes before word2 lexigraphically
         def before(word1, word2):
             for i in range(min(len(word1), len(word2))):
-                if d[word1[i]] < d[word2[i]]:
-                    return True
-                elif d[word1[i]] > d[word2[i]]:
+                if d[word1[i]] > d[word2[i]]:
                     return False
-            return len(word1) <= len(word2)
+                elif d[word1[i]] < d[word2[i]]:
+                    return True
+            return True if len(word1) <= len(word2) else False
 
-        for i in range(1, len(words)):
-            if not before(words[i - 1], words[i]):
+        j = 1
+        while j < len(words):
+            if not before(words[j - 1], words[j]):
                 return False
+            j += 1
 
         return True
