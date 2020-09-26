@@ -4,15 +4,15 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        if len(prices) == 0:
+        if len(prices) <= 1:
             return 0
 
-        maxProfit = 0
-        currMin = prices[0]
-        for i in range(len(prices)):
-            if prices[i] - currMin > maxProfit:
-                maxProfit = prices[i] - currMin
-            elif prices[i] < currMin:
-                currMin = prices[i]
+        currMin, currMinIndex = prices[0], 0
+        currMaxProfit = 0
 
-        return maxProfit
+        for i in range(1, len(prices)):
+            currMin = min(currMin, prices[i])
+            if prices[i] - currMin > currMaxProfit:
+                currMaxProfit = prices[i] - currMin
+
+        return currMaxProfit
