@@ -5,24 +5,16 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        nums = []
-        for i in range(1, 10):
-            nums.append(i)
-
         answer = []
 
-        def backtrack(currArr, currSum, currIndex):
-            if len(currArr) == k and currSum == n:
-                answer.append(currArr)
-            elif len(currArr) == k and currSum > n:
-                return
-            elif len(currArr) > k:
+        def backtrack(currArr, currSum, currNum):
+            if currSum == n and len(currArr) == k:
+                answer.append(currArr[:])
+            elif currSum > n or len(currArr) > k:
                 return
             else:
-                for i in range(currIndex, 9):
-                    currArr.append(nums[i])
-                    backtrack(currArr[:], currSum + nums[i], i + 1)
-                    currArr.pop()
+                for i in range(currNum, 10):
+                    backtrack(currArr + [i], currSum + i, i + 1)
 
-        backtrack([], 0, 0)
+        backtrack([], 0, 1)
         return answer
