@@ -8,18 +8,16 @@ class Solution(object):
         answer = []
         candidates.sort()
 
-        def backtrack(currArr, currSum, start):
+        def backtrack(currArr, currSum, currIndex):
             if currSum == target:
-                answer.append(currArr)
+                answer.append(currArr[:])
+            elif currSum > target:
+                return
             else:
-                for i in range(start, len(candidates)):
-                    if currSum + candidates[i] > target:
-                        break
-                    if i > start and candidates[i] == candidates[i - 1]:
+                for i in range(currIndex, len(candidates)):
+                    if i > currIndex and candidates[i] == candidates[i - 1]:
                         continue
-                    currArr.append(candidates[i])
-                    backtrack(currArr[:], currSum + candidates[i], i + 1)
-                    currArr.pop()
+                    backtrack(currArr + [candidates[i]], currSum + candidates[i], i + 1)
 
         backtrack([], 0, 0)
         return answer
