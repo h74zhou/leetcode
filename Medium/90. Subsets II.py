@@ -14,9 +14,10 @@ class Solution(object):
             if len(currArr) > len(nums):
                 return
             else:
-                if currArr[:] not in answer:
-                    answer.append(currArr[:])
+                answer.append(currArr[:])
                 for i in range(currIndex, len(nums)):
+                    if i > currIndex and nums[i] == nums[i - 1]:
+                        continue
                     backtrack(currArr + [nums[i]], i + 1)
 
         backtrack([], 0)
