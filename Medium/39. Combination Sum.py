@@ -5,21 +5,17 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        candidates.sort()
         answer = []
+        candidates.sort()
 
-        def backtrack(currArr, currSum, start):
+        def backtrack(currArr, currSum, currIndex):
             if currSum == target:
-                answer.append(currArr)
+                answer.append(currArr[:])
+            elif currSum > target:
+                return
             else:
-                for i in range(start, len(candidates)):
-                    if currSum + candidates[i] > target:
-                        break
-                    currArr.append(candidates[i])
-                    currSum += candidates[i]
-                    backtrack(currArr[:], currSum, i)
-                    currArr.pop()
-                    currSum -= candidates[i]
+                for i in range(currIndex, len(candidates)):
+                    backtrack(currArr + [candidates[i]], currSum + candidates[i], i)
 
         backtrack([], 0, 0)
         return answer
