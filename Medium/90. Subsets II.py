@@ -4,18 +4,20 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        nums.sort()
-        length = len(nums)
         answer = []
+        if len(nums) == 0:
+            return answer
+
+        nums.sort()
 
         def backtrack(currArr, currIndex):
-            answer.append(currArr)
-            for i in range(currIndex, length):
-                if i > currIndex and nums[i] == nums[i - 1]:
-                    continue
-                currArr.append(nums[i])
-                backtrack(currArr[:], i + 1)
-                currArr.pop()
+            if len(currArr) > len(nums):
+                return
+            else:
+                if currArr[:] not in answer:
+                    answer.append(currArr[:])
+                for i in range(currIndex, len(nums)):
+                    backtrack(currArr + [nums[i]], i + 1)
 
         backtrack([], 0)
         return answer
