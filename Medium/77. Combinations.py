@@ -6,18 +6,13 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         answer = []
-        nums = []
-        for i in range(1, n + 1):
-            nums.append(i)
 
         def backtrack(currArr, currIndex):
-            if len(currArr) == k:
-                answer.append(currArr)
+            if len(currArr) >= k:
+                answer.append(currArr[:])
             else:
-                for i in range(currIndex, len(nums)):
-                    currArr.append(nums[i])
-                    backtrack(currArr[:], i + 1)
-                    currArr.pop()
+                for i in range(currIndex, n + 1):
+                    backtrack(currArr + [i], i + 1)
 
-        backtrack([], 0)
+        backtrack([], 1)
         return answer
