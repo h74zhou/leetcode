@@ -23,4 +23,5 @@ class Solution(object):
 
 
 sol = Solution()
-print sol.minMeetingRooms([[7, 10], [2, 4]])
+print sol.minMeetingRooms(
+    [[1, 2], [3, 4], [5, 6], [7, 8]])
