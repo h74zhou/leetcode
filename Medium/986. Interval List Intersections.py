@@ -5,18 +5,17 @@ class Solution(object):
         :type B: List[List[int]]
         :rtype: List[List[int]]
         """
-        i = 0
-        j = 0
-        answer = []
+        if len(A) == 0 or len(B) == 0:
+            return []
+
+        i, j, answer = 0, 0, []
 
         while i < len(A) and j < len(B):
-            aStart, aEnd = A[i]
-            bStart, bEnd = B[j]
-
-            if aStart <= bEnd and aEnd >= bStart:
-                answer.append([max(aStart, bStart), min(aEnd, bEnd)])
-
-            if aEnd <= bEnd:
+            front = max(A[i][0], B[j][0])
+            back = min(A[i][1], B[j][1])
+            if back >= front:
+                answer.append([front, back])
+            if A[i][1] < B[j][1]:
                 i += 1
             else:
                 j += 1
