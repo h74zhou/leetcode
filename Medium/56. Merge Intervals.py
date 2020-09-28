@@ -5,24 +5,25 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         if len(intervals) == 0:
-            return intervals
+            return []
 
         def canMerge(interval1, interval2):
             front = max(interval1[0], interval2[0])
             back = min(interval1[1], interval2[1])
             return back >= front
 
-        intervals.sort(key=lambda x: x[0])
-        stack = [intervals[0]]
+        intervals.sort()
+        stack, answer = [intervals[0]], []
 
-        for interval in intervals[1:]:
-            if len(stack) == 0:
-                stack.append(interval)
+        for i in range(1, len(intervals)):
+            currInterval = intervals[i]
+            prevInterval = stack.pop()
+            if canMerge(prevInterval, currInterval):
+                minStart = min(prevInterval[0], currInterval[0])
+                maxEnd = max(prevInterval[1], currInterval[1])
+                stack.append([minStart, maxEnd])
             else:
-                if canMerge(stack[-1], interval):
-                    start, end = stack.pop()
-                    stack.append([min(start, interval[0]), max(end, interval[1])])
-                else:
-                    stack.append(interval)
+                stack.append(prevInterval)
+                stack.append(currInterval)
 
         return stack
