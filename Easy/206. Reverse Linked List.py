@@ -10,8 +10,7 @@ class Solution(object):
         :rtype: ListNode
         """
         dum = None
-        curr = head
-        prev = dum
+        curr, prev = head, dum
 
         while curr:
             next = curr.next
