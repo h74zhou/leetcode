@@ -4,11 +4,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        leftSum = [1]
+        leftSum = [1 for x in range(len(nums))]
+
         for i in range(1, len(nums)):
-            leftSum.append(leftSum[i - 1] * nums[i - 1])
+            leftSum[i] = leftSum[i - 1] * nums[i - 1]
 
         rightSum = 1
+
         for i in range(len(nums) - 1, -1, -1):
             leftSum[i] *= rightSum
             rightSum *= nums[i]
