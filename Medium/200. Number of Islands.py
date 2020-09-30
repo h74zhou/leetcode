@@ -4,29 +4,21 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
-        if len(grid) == 0:
-            return 0
 
-        def dfs(y, x):
-            if y < 0 or y >= len(grid):
-                return 0
-            if x < 0 or x >= len(grid[0]):
-                return 0
-            if grid[y][x] == '0':
-                return 0
-            grid[y][x] = '0'
-            dfs(y + 1, x)
-            dfs(y - 1, x)
-            dfs(y, x + 1)
-            dfs(y, x - 1)
-            return 1
+        def dfs(grid, i, j):
+            if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] == "0":
+                return
+            grid[i][j] = "0"
+            dfs(grid, i + 1, j)
+            dfs(grid, i - 1, j)
+            dfs(grid, i, j + 1)
+            dfs(grid, i, j - 1)
 
-        row = len(grid)
-        column = len(grid[0])
         count = 0
-
-        for y in range(row):
-            for x in range(column):
-                count += dfs(y, x)
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == "1":
+                    dfs(grid, i, j)
+                    count += 1
 
         return count
