@@ -10,5 +10,23 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        self.total = 0
+        def dfs(currStr, currNode):
+            if not currNode.left and not currNode.right:
+                val = int(currStr + str(currNode.val))
+                self.total += val
+            elif not currNode.left:
+                self.total += int(currStr) if len(currStr) > 0 else 0
+                dfs(currStr + str(currNode.val), currNode.right)
+            elif not currNode.right:
+                self.total += int(currStr) if len(currStr) > 0 else 0
+                dfs(currStr + str(currNode.val), currNode.left)
+            else:
+                dfs(currStr + str(currNode.val), currNode.left)
+                dfs(currStr + str(currNode.val), currNode.right)
 
-        def dfs()
+        if not root:
+            return 0
+
+        dfs("", root)
+        return self.total
