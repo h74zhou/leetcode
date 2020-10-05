@@ -10,21 +10,20 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        answer = []
         if not root:
-            return answer
+            return []
 
-        queue = [root]
-        while queue:
-            temp = []
-            level = []
-            for node in queue:
-                level.append(node.val)
+        q, answer = [root], []
+
+        while q:
+            nextLevel, currLevel = [], []
+            for node in q:
+                currLevel.append(node.val)
                 if node.left:
-                    temp.append(node.left)
+                    nextLevel.append(node.left)
                 if node.right:
-                    temp.append(node.right)
-            answer.append(level)
-            queue = temp[:]
+                    nextLevel.append(node.right)
+            answer.append(currLevel[:])
+            q = nextLevel[:]
 
         return answer
