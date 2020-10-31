@@ -11,17 +11,13 @@ class Solution(object):
         :rtype: List[int]
         """
         answer = []
-        if not root:
-            return answer
 
-        stack = [root]
+        def preOrder(node):
+            if not node:
+                return
+            answer.append(node.val)
+            preOrder(node.left)
+            preOrder(node.right)
 
-        while stack:
-            last = stack.pop()
-            answer.append(last.val)
-            if last.right:
-                stack.append(last.right)
-            if last.left:
-                stack.append(last.left)
-
+        preOrder(root)
         return answer
