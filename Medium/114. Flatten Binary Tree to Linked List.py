@@ -16,13 +16,14 @@ class Solution(object):
         curr = root
 
         while curr:
+            # find the leftMax
             if curr.left:
-                # if there's a left node, find its max
                 leftMax = curr.left
                 while leftMax.right:
                     leftMax = leftMax.right
+
+                # connects leftmax to start of the right branch of curr
                 leftMax.right = curr.right
                 curr.right = curr.left
                 curr.left = None
             curr = curr.right
-
