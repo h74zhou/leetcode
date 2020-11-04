@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, k, v):
+    def __init__(self, k = None, v = None):
         self.key = k
         self.value = v
         self.next = None
@@ -11,38 +11,38 @@ class LRUCache(object):
         """
         :type capacity: int
         """
-        self.cache = {}
-        self.head = Node(0, 0)
-        self.tail = Node(0, 0)
+        self.capacity = capacity
+        self.head, self.tail = Node(), Node()
         self.head.next = self.tail
         self.tail.prev = self.head
-        self.capacity = capacity
+        self.cache = {} # key -> Node(key, value)
         self.count = 0
 
     def removeNode(self, node):
         node.prev.next = node.next
         node.next.prev = node.prev
 
-    def insertFront(self, node):
-        currHead = self.head.next
+    def addFront(self, node):
+        temp = self.head.next
         self.head.next = node
+        node.next = temp
         node.prev = self.head
-        node.next = currHead
-        currHead.prev = node
+        temp.prev = node
 
     def moveToFront(self, node):
         self.removeNode(node)
-        self.insertFront(node)
+        self.addFront(node)
 
     def get(self, key):
         """
         :type key: int
         :rtype: int
         """
-        if key not in self.cache:
-            return -1
-        self.moveToFront(self.cache[key])
-        return self.cache[key].value
+        possibleNode = self.cache.get(key)
+        if possibleNode:
+            self.moveToFront(possibleNode)
+            return possibleNode.value
+        return -1
 
     def put(self, key, value):
         """
@@ -50,17 +50,18 @@ class LRUCache(object):
         :type value: int
         :rtype: None
         """
-        if key in self.cache:
+        existingNode = self.cache.get(key)
+        if existingNode:
             self.cache[key].value = value
-            self.moveToFront(self.cache[key])
+            self.moveToFront(existingNode)
         else:
             newNode = Node(key, value)
             if self.count + 1 > self.capacity:
-                self.cache.pop(self.tail.prev.key, None)
+                self.cache.pop(self.tail.prev.key)
                 self.removeNode(self.tail.prev)
             else:
                 self.count += 1
-            self.insertFront(newNode)
+            self.addFront(newNode)
             self.cache[key] = newNode
 
 
