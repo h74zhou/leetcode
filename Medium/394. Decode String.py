@@ -4,21 +4,23 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        currNum, currStr, stack = 0, "", []
+        stack, currStr, currCount = [], "", 0
 
-        for c in s:
-            if c == "[":
+        for letter in s:
+            if letter == "[":
                 stack.append(currStr)
-                stack.append(currNum)
-                currNum = 0
+                stack.append(currCount)
                 currStr = ""
-            elif c == "]":
-                prevNum = stack.pop()
+                currCount = 0
+            elif letter == "]":
+                prevCount = stack.pop()
                 prevStr = stack.pop()
-                currStr = prevStr + prevNum * currStr
-            elif c.isdigit():
-                currNum = currNum * 10 + int(c)
+                currStr = prevStr + prevCount * currStr
+            elif letter.isdigit():
+                currCount = currCount * 10 + int(letter)
             else:
-                currStr += c
+                currStr += letter
 
         return currStr
+
+
