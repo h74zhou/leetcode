@@ -14,22 +14,22 @@ class Solution(object):
         :type root: Node
         :rtype: Node
         """
-        if not root:
+        if root is None:
             return root
 
         q = [root]
 
         while q:
-            temp = []
-            for node in q:
-                if node.left:
-                    temp.append(node.left)
-                if node.right:
-                    temp.append(node.right)
-            for i in range(len(q) - 1):
-                leftNode, rightNode = q[i], q[i + 1]
-                leftNode.next = rightNode
-            q = temp[:]
+            nextlevel, currLevelLength = [], len(q)
+            for i in range(currLevelLength):
+                if i < currLevelLength - 1:
+                    q[i].next = q[i + 1]
+                if q[i].left:
+                    nextlevel.append(q[i].left)
+                if q[i].right:
+                    nextlevel.append(q[i].right)
+            q[-1].next = None
+            q = nextlevel
 
         return root
 
