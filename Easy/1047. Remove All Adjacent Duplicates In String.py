@@ -4,20 +4,13 @@ class Solution(object):
         :type S: str
         :rtype: str
         """
-        if len(S) == 0:
-            return S
 
-        stack = [S[0]]
+        stack, answer = [], ""
 
-        for letter in S[1:]:
-            if len(stack) == 0 or letter != stack[-1]:
-                stack.append(letter)
-            elif letter == stack[-1]:
+        for letter in S:
+            if stack and stack[-1] == letter:
                 stack.pop()
+            else:
+                stack.append(letter)
 
-        answer = ""
-
-        for letter in stack:
-            answer += letter
-
-        return answer
+        return answer.join(stack)
