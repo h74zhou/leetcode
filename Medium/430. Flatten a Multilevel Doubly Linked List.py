@@ -17,30 +17,32 @@ class Solution(object):
         if head is None:
             return head
 
-        # create temp for curr and the next node
         curr = head
 
         while curr:
             if curr.child:
                 right = curr.next
 
-                # recursively process children
+                # recurse on the child node
                 curr.next = self.flatten(curr.child)
                 curr.next.prev = curr
                 curr.child = None
 
-                # loop to the end
+                # move to the end of the child branch
                 while curr.next:
                     curr = curr.next
 
-                # connect the original next
+                # if there was a right node before, connect
                 if right:
                     curr.next = right
                     curr.next.prev = curr
-                    curr.child = None
 
             curr = curr.next
 
         return head
+
+
+
+
 
 
