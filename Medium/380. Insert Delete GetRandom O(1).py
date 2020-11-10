@@ -1,11 +1,12 @@
 import random
+
 class RandomizedSet(object):
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.dict = {}
+        self.d = {}
         self.arr = []
 
     def insert(self, val):
@@ -14,9 +15,9 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val not in self.dict:
+        if val not in self.d:
+            self.d[val] = len(self.arr)
             self.arr.append(val)
-            self.dict[val] = len(self.arr) - 1
             return True
         return False
 
@@ -26,25 +27,25 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        if val not in self.dict:
-            return False
-
-        valIndex = self.dict[val]
-        lastIndex = len(self.arr) - 1
-        last = self.arr[lastIndex]
-        self.arr[valIndex], self.arr[lastIndex] = self.arr[lastIndex], self.arr[valIndex]
-        self.dict[last] = valIndex
-        self.arr.pop()
-        self.dict.pop(val)
-        return True
+        arrIndex = self.d.get(val)
+        if arrIndex is not None:
+            # swap the element to the last index of the array
+            self.arr[arrIndex], self.arr[-1] = self.arr[-1], self.arr[arrIndex]
+            # update the non-removed index
+            self.d[self.arr[arrIndex]] = arrIndex
+            # pop the last element from arr
+            self.arr.pop()
+            # remove from dictionary
+            self.d.pop(val)
+            return True
+        return False
 
     def getRandom(self):
         """
         Get a random element from the set.
         :rtype: int
         """
-        randomIndex = random.randint(0, len(self.arr) - 1)
-        return self.arr[randomIndex]
+        return self.arr[random.randint(0, len(self.arr) - 1)]
 
 
 # Your RandomizedSet object will be instantiated and called as such:
