@@ -4,13 +4,14 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        low, high = 0, len(nums) - 1
+        # find the pivot
+        left, right = 0, len(nums) - 1
 
-        while low < high:
-            mid = low + (high - low) // 2
-            if nums[mid] < nums[high]:
-                high = mid
+        while left < right:
+            mid = left + (right - left) // 2
+            if nums[mid] >= nums[right]:
+                left = mid + 1
             else:
-                low = mid + 1
+                right = mid
 
-        return nums[low]
+        return nums[left]
