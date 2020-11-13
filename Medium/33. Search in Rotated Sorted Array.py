@@ -5,32 +5,31 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        # find smallest element at pivot
+         # find the pivot
         left, right = 0, len(nums) - 1
+
         while left < right:
             mid = left + (right - left) // 2
-            if nums[mid] < nums[right]:
-                right = mid
-            else:
+            if nums[mid] >= nums[right]:
                 left = mid + 1
+            else:
+                right = mid
 
-        # left will be the pivot
-        pivot = left
-
+        # if the number is within pivot and right, search in this interval
         if nums[left] <= target <= nums[len(nums) - 1]:
-            # binary search from pivot to end
-            left, right = pivot, len(nums) - 1
+            start, end = left, len(nums) - 1
         else:
-            # binary search from 0 to pivot
-            left, right = 0, pivot
+            # otherwise, serach in other interval
+            start, end = 0, left - 1
 
-        while left <= right:
-            mid = left + (right - left) // 2
+        # conduct regular binary search
+        while start <= end:
+            mid = start + (end - start) // 2
             if nums[mid] == target:
                 return mid
-            elif nums[mid] < target:
-                left = mid + 1
+            elif nums[mid] > target:
+                end = mid - 1
             else:
-                right = mid - 1
+                start = mid + 1
 
         return -1
