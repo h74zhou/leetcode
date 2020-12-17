@@ -1,9 +1,9 @@
 class Node:
     def __init__(self, k = None, v = None):
         self.key = k
-        self.value = v
-        self.next = None
+        self.val = v
         self.prev = None
+        self.next = None
 
 class LRUCache(object):
 
@@ -11,37 +11,42 @@ class LRUCache(object):
         """
         :type capacity: int
         """
-        self.capacity = capacity
+        self.maxCapacity = capacity
+        self.currCapacity = 0
+        self.dict = {}
         self.head, self.tail = Node(), Node()
         self.head.next = self.tail
         self.tail.prev = self.head
-        self.cache = {} # key -> Node(key, value)
-        self.count = 0
 
-    def removeNode(self, node):
-        node.prev.next = node.next
-        node.next.prev = node.prev
-
-    def addFront(self, node):
-        temp = self.head.next
+    def addToFront(self, node):
+        newSecondNode = self.head.next
         self.head.next = node
-        node.next = temp
         node.prev = self.head
-        temp.prev = node
+        node.next = newSecondNode
+        newSecondNode.prev = node
 
     def moveToFront(self, node):
-        self.removeNode(node)
-        self.addFront(node)
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        self.addToFront(node)
+
+    def removeLRU(self):
+        oldNode = self.tail.prev
+        oldNode.prev.next = self.tail
+        self.tail.prev = oldNode.prev
+        oldNode.next = None
+        oldNode.prev = None
+        self.dict.pop(oldNode.key)
 
     def get(self, key):
         """
         :type key: int
         :rtype: int
         """
-        possibleNode = self.cache.get(key)
-        if possibleNode:
-            self.moveToFront(possibleNode)
-            return possibleNode.value
+        item = self.dict.get(key, None)
+        if item is not None:
+            self.moveToFront(item)
+            return item.val
         return -1
 
     def put(self, key, value):
@@ -50,19 +55,16 @@ class LRUCache(object):
         :type value: int
         :rtype: None
         """
-        existingNode = self.cache.get(key)
-        if existingNode:
-            self.cache[key].value = value
-            self.moveToFront(existingNode)
-        else:
+        if key not in self.dict:
             newNode = Node(key, value)
-            if self.count + 1 > self.capacity:
-                self.cache.pop(self.tail.prev.key)
-                self.removeNode(self.tail.prev)
-            else:
-                self.count += 1
-            self.addFront(newNode)
-            self.cache[key] = newNode
+            if self.currCapacity >= self.maxCapacity:
+                self.removeLRU()
+            self.dict[key] = newNode
+            self.addToFront(newNode)
+            self.currCapacity += 1
+        else:
+            self.dict[key].val = value
+            self.moveToFront(self.dict[key])
 
 
 # Your LRUCache object will be instantiated and called as such:
