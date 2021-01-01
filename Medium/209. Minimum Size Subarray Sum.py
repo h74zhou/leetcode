@@ -8,22 +8,17 @@ class Solution(object):
         if len(nums) == 0:
             return 0
 
-        start, end, currSum, minSize = 0, 0, nums[0], float('inf')
-
-        while end < len(nums):
+        start, end, currSum, minLength = 0, 0, nums[0], float('inf')
+        while start < len(nums) and end < len(nums):
             if currSum >= s:
-                minSize = min(minSize, end - start + 1)
-                if start < end:
-                    currSum -= nums[start]
-                    start += 1
-                else:
-                    start += 1
-                    end += 1
-                    if end < len(nums):
-                        currSum = nums[end]
+                minLength = min(end - start + 1 , minLength)
+                currSum -= nums[start]
+                start += 1
             else:
                 end += 1
                 if end < len(nums):
                     currSum += nums[end]
 
-        return minSize if minSize != float('inf') else 0
+        return minLength if minLength != float('inf') else 0
+
+
