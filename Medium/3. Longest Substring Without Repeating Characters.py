@@ -4,18 +4,17 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        if len(s) == 0:
+            return 0
+
+        longest = 0
         window = {}
-        maxLength = 0
-        i = 0
+        left = 0
 
-        for j in range(len(s)):
-            if s[j] not in window:
-                window[s[j]] = 1
-            else:
-                while s[j] in window and i < j:
-                    window.pop(s[i], None)
-                    i += 1
-                window[s[j]] = 1
-            maxLength = max(maxLength, j - i + 1)
+        for right in range(len(s)):
+            if s[right] in window:
+                left = max(left, window.get(s[right]) + 1)
+            window[s[right]] = right
+            longest = max(longest, right - left + 1)
 
-        return maxLength
+        return longest
