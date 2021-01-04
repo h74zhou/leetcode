@@ -4,17 +4,21 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        nums.sort()
         answer = []
 
-        def backtrack(currArr):
+        if len(nums) == 0:
+            return answer
+
+        def backtrack(currArr, currIndex, currSet):
             if len(currArr) == len(nums):
-                answer.append(currArr[:])
+                answer.append(currArr)
             else:
                 for i in range(len(nums)):
-                    if nums[i] in currArr:
+                    if nums[i] in currSet:
                         continue
-                    backtrack(currArr + [nums[i]])
+                    newSet = currSet.copy()
+                    newSet.add(nums[i])
+                    backtrack(currArr[:] + [nums[i]], i + 1, newSet)
 
-        backtrack([])
+        backtrack([], 0, set())
         return answer
