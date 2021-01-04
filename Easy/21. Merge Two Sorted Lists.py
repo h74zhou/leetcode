@@ -3,8 +3,6 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
-
 class Solution(object):
     def mergeTwoLists(self, l1, l2):
         """
@@ -13,35 +11,21 @@ class Solution(object):
         :rtype: ListNode
         """
         dum = ListNode()
-        cur = dum
-        node1 = l1
-        node2 = l2
+        curr = dum
+        first, second = l1, l2 # pointers to l1, l2
 
-        while node1 is not None and node2 is not None:
-            if node1.val < node2.val:
-                cur.next = node1
-                node1 = node1.next
-                cur = cur.next
-            elif node1.val > node2.val:
-                cur.next = node2
-                node2 = node2.next
-                cur = cur.next
+        while curr and first and second:
+            if first.val <= second.val:
+                curr.next = first
+                first = first.next
             else:
-                cur.next = node1
-                cur = cur.next
-                node1 = node1.next
-                cur.next = node2
-                cur = cur.next
-                node2 = node2.next
+                curr.next = second
+                second = second.next
+            curr = curr.next
 
-        while node1 is not None:
-            cur.next = node1
-            node1 = node1.next
-            cur = cur.next
-
-        while node2 is not None:
-            cur.next = node2
-            node2 = node2.next
-            cur = cur.next
+        if first:
+            curr.next = first
+        elif second:
+            curr.next = second
 
         return dum.next
