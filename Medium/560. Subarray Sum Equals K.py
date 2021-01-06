@@ -5,12 +5,14 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        prefixSum = 0
         d = {0: 1}
+        prefixSum = 0
         count = 0
-        for i in range(len(nums)):
-            prefixSum += nums[i]
+
+        for num in nums:
+            prefixSum += num
             count += d.get(prefixSum - k, 0)
             d[prefixSum] = d.get(prefixSum, 0) + 1
 
         return count
+        [1, 0, 0]
