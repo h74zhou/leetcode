@@ -4,17 +4,15 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        if len(s) == 0:
-            return 0
+#       s = "abcabcbb"
+#       Output: 3
+        start, longest = 0, 0
+        d = {} # letter: last index of where it occured
 
-        longest = 0
-        window = {}
-        left = 0
-
-        for right in range(len(s)):
-            if s[right] in window:
-                left = max(left, window.get(s[right]) + 1)
-            window[s[right]] = right
-            longest = max(longest, right - left + 1)
+        for end in range(len(s)):
+            if s[end] in d:
+                start = max(start, d[s[end]] + 1)
+            d[s[end]] = max(d.get(s[end], 0), end)
+            longest = max(longest, end - start + 1)
 
         return longest
