@@ -1,0 +1,18 @@
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        d = {0: 1}
+        currSum = 0
+        count = 0
+
+        for i in range(len(nums)):
+            currSum += nums[i]
+            if currSum - k in d:
+                count += d.get(currSum - k, 0)
+            d[currSum] = d.get(currSum, 0) + 1
+
+        return count
