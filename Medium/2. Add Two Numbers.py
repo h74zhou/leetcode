@@ -10,30 +10,30 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        def convertListToNum(l):
-            arr = []
-            while l is not None:
-                arr.append(l.val)
-                l = l.next
-            total = 0
-            arr.reverse()
-            for i in arr:
-                total = 10 * total + i
-            return total
+        num1, num2 = "", ""
+        node1, node2 = l1, l2
 
-        def convertArrtoList(nums):
-            if len(nums) == 0:
-                return ListNode()
-            else:
-                currNode = ListNode()
-                head = currNode
-                for i in range(len(nums)):
-                    newNode = ListNode(nums[i])
-                    currNode.next = newNode
-                    currNode = currNode.next
-                return head.next
+        while node1:
+            num1 += str(node1.val)
+            node1 = node1.next
 
-        newSum = convertListToNum(l1) + convertListToNum(l2)
-        newArr = [int(i) for i in str(newSum)]
-        newArr.reverse()
-        return convertArrtoList(newArr[:])
+        while node2:
+            num2 += str(node2.val)
+            node2 = node2.next
+
+        num1, num2 = num1[::-1], num2[::-1]
+        answer = str(int(num1) + int(num2))
+
+        start = ListNode()
+        curr = start
+
+        for i in range(len(answer) - 1, -1, -1):
+            letter = answer[i]
+            newNode = ListNode(int(letter))
+            curr.next = newNode
+            curr = curr.next
+
+        return start.next
+
+
+
