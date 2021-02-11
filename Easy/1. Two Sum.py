@@ -5,13 +5,10 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        d = {} # val: index
-
+        d = {} 
         for index, val in enumerate(nums):
             complement = target - val
-            complementIndex = d.get(complement, None)
-            if complementIndex is not None:
-                return [complementIndex, index]
-            else:
-                d[val] = index
-        return []
+            if complement in d:
+                return [d[complement], index]
+            d[val] = index
+        return -1
