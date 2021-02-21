@@ -8,21 +8,23 @@ class Solution(object):
         :rtype: List[List[int]]
         """
 
-        width = len(image[0])
-        height = len(image)
-        oldColor = image[sr][sc]
+        d = {}
+        color = image[sr][sc]
 
-        map = {}
+        def inBounds(row, col):
+            return row >= 0 and row < len(image) and col >= 0 and col < len(image[0])
 
-        def fill(sr, sc):
-            if sr >= 0 and sr < height and sc >= 0 and sc < width:
-                if image[sr][sc] == oldColor and (sr, sc) not in map:
-                    image[sr][sc] = newColor
-                    map[(sr, sc)] = 1
-                    fill(sr, sc + 1)
-                    fill(sr, sc - 1)
-                    fill(sr + 1, sc)
-                    fill(sr - 1, sc)
+        def fill(row, col):
+            if not inBounds(row, col) or image[row][col] != color:
+                return
+            else:
+                if (row, col) not in d:
+                    image[row][col] = newColor
+                    d[(row, col)] = 1
+                    fill(row - 1, col)
+                    fill(row + 1, col)
+                    fill(row, col + 1)
+                    fill(row, col - 1)
 
         fill(sr, sc)
         return image
