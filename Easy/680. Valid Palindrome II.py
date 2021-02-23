@@ -4,20 +4,20 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        def isPalindrome(i, j):
-            while i <= j:
-                if s[i] != s[j]:
+        def isPalindrome(word, start, end):
+            while start < end:
+                if word[start] != word[end]:
                     return False
-                i += 1
-                j -= 1
+                start += 1
+                end -= 1
             return True
 
-        if len(s) <= 1:
-            return True
         start, end = 0, len(s) - 1
-        while start <= end:
+
+        while start < end:
             if s[start] != s[end]:
-                return isPalindrome(start, end - 1) or isPalindrome(start + 1, end)
+                return isPalindrome(s, start + 1, end) or isPalindrome(s, start, end - 1)
             start += 1
             end -= 1
+
         return True
